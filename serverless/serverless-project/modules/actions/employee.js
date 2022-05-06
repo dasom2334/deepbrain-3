@@ -1,6 +1,6 @@
 import * as t from "../types";
 
-export const setModalOpen = (isModalOpen) => {
+export const setEmployeeModalOpen = (isModalOpen) => {
 	return {
 		type: t.MODAL_OPEN,
 		payload: isModalOpen,

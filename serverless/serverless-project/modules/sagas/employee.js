@@ -1,8 +1,10 @@
 import { all, put, takeLatest } from "redux-saga/effects";
 import * as t from "../types";
+import checkLogined  from "../lambdas/checkLogined";
 
-function* fetchEmployees() {
+export function* fetchEmployees() {
 	try {
+		checkLogined();
 		const response = yield fetch("/api/employees");
 
 		const employeeList = yield response.json();
@@ -19,12 +21,13 @@ function* fetchEmployees() {
 	}
 }
 
-function* watchFetchEmployees() {
+export function* watchFetchEmployees() {
 	yield takeLatest(t.EMPLOYEE_FETCH_REQUESTED, fetchEmployees);
 }
 
-function* addEmployee(action) {
+export function* addEmployee(action) {
 	try {
+		checkLogined();
 		const response = yield fetch("/api/employees", {
 			method: "POST",
 			headers: {
@@ -47,12 +50,13 @@ function* addEmployee(action) {
 	}
 }
 
-function* watchAddEmployee() {
+export function* watchAddEmployee() {
 	yield takeLatest(t.EMPLOYEE_ADD_REQUESTED, addEmployee);
 }
 
-function* deleteEmployee(action) {
+export function* deleteEmployee(action) {
 	try {
+		checkLogined();
 		const response = yield fetch("/api/employees/" + action.payload, {
 			method: "DELETE",
 		});
@@ -71,12 +75,13 @@ function* deleteEmployee(action) {
 	}
 }
 
-function* watchRemoveEmployee() {
+export function* watchRemoveEmployee() {
 	yield takeLatest(t.EMPLOYEE_DELETE_REQUESTED, deleteEmployee);
 }
 
-function* updateEmployee(action) {
+export function* updateEmployee(action) {
 	try {
+		checkLogined();
 		const response = yield fetch("/api/employees/" + action.payload._id, {
 			method: "PUT",
 			headers: {
@@ -99,15 +104,6 @@ function* updateEmployee(action) {
 	}
 }
 
-function* watchUpdateEmployee() {
+export function* watchUpdateEmployee() {
 	yield takeLatest(t.EMPLOYEE_UPDATE_REQUESTED, updateEmployee);
-}
-
-export default function* rootSaga() {
-	yield all([
-		watchFetchEmployees(),
-		watchAddEmployee(),
-		watchRemoveEmployee(),
-		watchUpdateEmployee(),
-	]);
 }

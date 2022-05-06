@@ -57,7 +57,7 @@ export function Nav() {
     }
 
     useEffect(() => {
-        const loginUser = localStorage.getItem("loginUser")
+        const loginUser = localStorage.getItem("loginedUser")
         
         if (loginUser === null) {
             setUserUrls({

@@ -1,47 +1,44 @@
 import { useSelector, useDispatch } from "react-redux";
 import { PencilSVG, TrashSVG } from "@/icons";
 import {
-	deleteEmployee,
-	fetchEmployees,
-	setEmployeeModalOpen,
-	setSelectedEmployee,
+	deleteUser,
+	fetchUsers,
+	setRegisterModalOpen,
+	setSelectedUser,
 } from "@/modules";
 import { useEffect } from "react";
 
-export function Table() {
-	const state = useSelector((state) => state.employee);
-
+export function AuthTable() {
+	const state = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchEmployees());
+		const loginedUser = JSON.parse(localStorage.getItem("loginedUser"));
+		dispatch(fetchUsers(loginedUser));
 	}, [dispatch]);
 
 	return (
 		<table className="table">
 			<thead className="table__head">
 				<tr>
-					<th>Full name</th>
-					<th>Email</th>
-					<th>Address</th>
-					<th>Phone</th>
-					<th>Actions</th>
+					<th>userid</th>
+					<th>password</th>
+					<th>name</th>
 				</tr>
 			</thead>
 
 			<tbody className="table__body">
-				{state.employeeList.map(({ _id, name, email, address, phone }) => (
+				{(state)?state.userList.map(({ _id, userid, password, name }) => (
 					<tr key={_id}>
+						<td>{userid}</td>
+						<td>{password}</td>
 						<td>{name}</td>
-						<td>{email}</td>
-						<td>{address}</td>
-						<td>{phone}</td>
 						<td>
 							<button
 								className="btn btn__compact btn__edit"
 								onClick={() => {
-									dispatch(setSelectedEmployee(_id));
-									dispatch(setEmployeeModalOpen(true));
+									dispatch(setSelectedUser(_id));
+									dispatch(setRegisterModalOpen(true));
 								}}
 							>
 								<PencilSVG />
@@ -49,14 +46,14 @@ export function Table() {
 							<button
 								className="btn btn__compact btn__delete"
 								onClick={() => {
-									dispatch(deleteEmployee(_id));
+									dispatch(deleteUser(_id));
 								}}
 							>
 								<TrashSVG />
 							</button>
 						</td>
 					</tr>
-				))}
+				)):''}
 			</tbody>
 		</table>
 	);

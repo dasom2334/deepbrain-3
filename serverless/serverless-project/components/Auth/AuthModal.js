@@ -7,63 +7,65 @@ import cx from "clsx";
 
 import { CheckSVG, CloseSVG } from "@/icons";
 import {
-	addEmployee,
-	setEmployeeModalOpen,
-	setSelectedEmployee,
-	updateEmployee,
+	addUser,
+	setUserModalOpen,
+	setSelectedUser,
+	updateUser,
 } from "@/modules";
 
-export function Modal() {
+export function AuthModal() {
 	const { register, handleSubmit, errors, reset, setValue } = useForm();
 
-	const state = useSelector((state) => state.employee);
+	const state = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
 
 	const closeModal = () => {
 		reset();
-		dispatch(setEmployeeModalOpen(false));
-		dispatch(setSelectedEmployee(undefined));
+		dispatch(setUserModalOpen(false));
+		dispatch(setSelectedUser(undefined));
 	};
 
 	const onSubmitHandler = (data) => {
 		if (data) {
 			closeModal();
 		}
-		if (state.selectedEmployee) {
+		if (state.selectedUser) {
 			dispatch(
-				updateEmployee({
-					_id: state.selectedEmployee._id,
+				updateUser({
+					_id: state.selectedUser._id,
 					...data,
 				})
 			);
 		} else {
-			dispatch(addEmployee(data));
+			dispatch(addUser(data));
 		}
 	};
 
 	useEffect(() => {
-		if (state.selectedEmployee) {
-			setValue("name", state.selectedEmployee.name);
-			setValue("email", state.selectedEmployee.email);
-			setValue("address", state.selectedEmployee.address);
-			setValue("phone", state.selectedEmployee.phone);
+		if (state.selectedUser) {
+			setValue("userid", state.selectedUser.userid);
+			setValue("password", state.selectedUser.password);
+			setValue("name", state.selectedUser.name);
+			setValue("email", state.selectedUser.email);
+			setValue("address", state.selectedUser.address);
+			setValue("phone", state.selectedUser.phone);
 		}
-	}, [state.selectedEmployee, setValue]);
+	}, [state.selectedUser, setValue]);
 
-	return state.isModalOpen
+	return state.isAuthModalOpen
 		? ReactDOM.createPortal(
 				<div className="modal">
 					<div className="modal__content">
 						<header className="header modal__header">
-							<h1 className="header__h2">
-								{state.selectedEmployee ? (
+							<h1 className="header__h2">rgrg
+								{state.selectedUser ? (
 									<>
-										Edit <span>Employee</span>
+										Edit <span>User</span>
 									</>
 								) : (
 									<>
-										Add <span>Employee</span>
+										Add <span>User</span>
 									</>
 								)}
 							</h1>
@@ -82,7 +84,7 @@ export function Modal() {
 						>
 							<div className="form__element">
 								<label
-									htmlFor="nameInput"
+									htmlFor="naeeemeInput"
 									className={cx("label", errors.name && "label--error")}
 								>
 									{errors.name ? (
@@ -197,7 +199,7 @@ export function Modal() {
 									<CloseSVG /> Cancel
 								</button>
 								<button className="btn btn__primary btn__icon" type="submit">
-									<CheckSVG /> {state.selectedEmployee ? "Update" : "Submit"}
+									<CheckSVG /> {state.selectedUser ? "Update" : "Submit"}
 								</button>
 							</div>
 						</form>

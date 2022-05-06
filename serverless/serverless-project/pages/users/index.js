@@ -1,4 +1,4 @@
-import { Header, Layout, Modal, Pagination, Table, Nav, AuthModal, MealCostModal, LoginModal,
+import { Header, Layout, Modal, Pagination, AuthTable, Nav, AuthModal, MealCostModal, LoginModal,
 	RegisterModal} from "@/components";
 
 function Landing() {
@@ -6,7 +6,7 @@ function Landing() {
 		<Layout>
 			<Nav />
 			<Header />
-			<Table />
+			<AuthTable />
 			<Pagination />
 			<Modal />
 			<AuthModal />

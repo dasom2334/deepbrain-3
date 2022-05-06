@@ -1,10 +1,9 @@
 import { useDispatch } from "react-redux";
 import { PersonAddSVG } from "@/icons";
-import { setModalOpen } from "@/modules";
+import { setMealCostModalOpen, setUserModalOpen, setEmployeeModalOpen } from "@/modules";
 
 export function Header() {
 	const dispatch = useDispatch();
-
 	return (
 		<header className="header">
 			<h1 className="header__h1">
@@ -13,10 +12,18 @@ export function Header() {
 			<button
 				className="btn btn__primary btn__icon"
 				onClick={() => {
-					dispatch(setModalOpen(true));
+					dispatch(setMealCostModalOpen(true));
 				}}
 			>
-				<PersonAddSVG /> <span>Add new</span>
+				<PersonAddSVG /> <span>Add new Meal Cost</span>
+			</button>
+			<button
+				className="btn btn__primary btn__icon"
+				onClick={() => {
+					dispatch(setEmployeeModalOpen(true));
+				}}
+			>
+				<PersonAddSVG /> <span>Add new Employee</span>
 			</button>
 		</header>
 	);
